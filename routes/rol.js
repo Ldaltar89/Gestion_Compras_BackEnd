@@ -8,14 +8,10 @@ const router = Router();
 
 router.use(validarJWT);
 
-router.get("/", validarROLE, getRoles);
+router.get("/", getRoles);
 router.post(
   "/",
-  [
-    validarROLE,
-    check("nombre", "El rol es obligatorio").not().isEmpty(),
-    validarCampos,
-  ],
+  [check("nombre", "El rol es obligatorio").not().isEmpty(), validarCampos],
   postRol
 );
 
