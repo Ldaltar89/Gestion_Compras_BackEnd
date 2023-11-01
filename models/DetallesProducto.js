@@ -3,19 +3,19 @@ const { Schema, model } = require("mongoose");
 const DetalleProductoSchema = Schema({
   peso: {
     type: String,
-    required: true,
+    required: false,
   },
   envase: {
     type: String,
-    required: true,
+    required: false,
   },
   tamano: {
     type: String,
-    required: true,
+    required: false,
   },
   unidad: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
