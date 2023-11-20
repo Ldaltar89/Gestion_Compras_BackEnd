@@ -3,8 +3,9 @@ const Producto = require("../models/Producto");
 
 const getProducto = async (req, res = response) => {
   const producto = await Producto.find()
-    .populate("user", "name")
-    .populate("detalle_producto");
+    .populate("marca")
+    .populate("categoria")
+    .populate("proveedor");
   res.json({
     ok: true,
     producto,
@@ -62,8 +63,6 @@ const actualizarProducto = async (req, res = response) => {
 };
 const eliminarProducto = async (req, res = response) => {
   const productoId = req.params.id;
-  const uid = req.uid;
-
   try {
     const producto = await Producto.findById(productoId);
     if (!producto) {

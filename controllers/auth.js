@@ -6,9 +6,9 @@ const Rol = require("../models/Rol");
 
 const getUsuarios = async (req, res = response) => {
   try {
-    const usuario = await Usuario.find();
+    const usuario = await Usuario.find().populate("rol");
     return res.status(200).json({
-      ok: false,
+      ok: true,
       usuario,
     });
   } catch (error) {
@@ -30,7 +30,6 @@ const crearUsuario = async (req, res = response) => {
         msg: "El usuario ya existe",
       });
     }
-
     usuario = new Usuario(req.body);
 
     //Encriptar contraseña
@@ -39,14 +38,9 @@ const crearUsuario = async (req, res = response) => {
 
     await usuario.save();
 
-    //Generar JWT
-    const token = await generarJWY(usuario.id, usuario.name);
-
     res.status(201).json({
       ok: true,
-      uid: usuario.id,
-      name: usuario.name,
-      token,
+      usuario,
     });
   } catch (error) {
     console.log(error);
@@ -107,8 +101,40 @@ const revalidarToken = async (req, res = response) => {
 
   res.json({
     ok: true,
+    uid,
+    name,
     token,
   });
 };
 
-module.exports = { crearUsuario, loginUsuario, revalidarToken, getUsuarios };
+const deleteUsuario = async (req, res = response) => {
+  const idUsuario = req.params.id;
+  try {
+    const usuario = await Usuario.findById(idUsuario);
+    if (!usuario) {
+      return res.status(404).json({
+        ok: false,
+        msg: "Usuario no existe por ese ID",
+      });
+    }
+
+    await Usuario.findByIdAndDelete(idUsuario);
+    return res.json({
+      ok: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      msg: "Hable con el administrador",
+    });
+  }
+};
+
+module.exports = {
+  crearUsuario,
+  loginUsuario,
+  revalidarToken,
+  getUsuarios,
+  deleteUsuario,
+};
