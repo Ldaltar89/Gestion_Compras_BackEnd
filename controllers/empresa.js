@@ -5,26 +5,32 @@ const crearEmpresa = async (req, res = response) => {
   const empresa = new Empresa(req.body);
   try {
     const empresaGuardada = await empresa.save();
-    res.json({
+    return res.status(200).json({
       ok: true,
       empresa: empresaGuardada,
+      msg: "Creado correctamente",
     });
   } catch (error) {
-    console.log(error);
-    res.status(500),
-      json({
-        ok: false,
-        msg: "Hable con el administrador",
-      });
+    return res.status(500).json({
+      ok: false,
+      msg: "Hable con el administrador",
+    });
   }
 };
 
 const getEmpresa = async (req, res = response) => {
-  const empresa = await Empresa.find();
-  res.json({
-    ok: true,
-    empresa,
-  });
+  try {
+    const empresa = await Empresa.find();
+    return res.status(200).json({
+      ok: true,
+      empresa,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: "Hable con el administrador",
+    });
+  }
 };
 
 module.exports = {

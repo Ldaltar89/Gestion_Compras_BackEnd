@@ -35,11 +35,6 @@ const ProveedorSchema = Schema({
     ref: "Empresa",
     required: true,
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "Usuario",
-    required: true,
-  },
 });
 
 // ProveedorSchema.method("toJSON", function () {

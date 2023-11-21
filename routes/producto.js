@@ -14,16 +14,20 @@ const {
   crearProducto,
   actualizarProducto,
   eliminarProducto,
+  getIdProducto,
 } = require("../controllers/producto");
 const { validarJWT } = require("../middlewares/validar-jwt");
 
 //Todas tienen que pasar por la validación de Obtener
 router.use(validarJWT);
 
-//Obtener Eventos
+//Obtener Producto
 router.get("/", getProducto);
 
-//Crear un nuevo Evento
+//Obtener Id Producto
+router.get("/:id", getIdProducto);
+
+//Crear un nuevo Producto
 router.post(
   "/",
   [
@@ -46,7 +50,7 @@ router.post(
   crearProducto
 );
 
-//Actualizar Evento
+//Actualizar Producto
 router.put(
   "/:id",
   [
@@ -69,7 +73,7 @@ router.put(
   actualizarProducto
 );
 
-//Borrar evento
+//Borrar Producto
 router.delete("/:id", eliminarProducto);
 
 module.exports = router;

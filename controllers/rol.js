@@ -7,6 +7,7 @@ const getRoles = async (req, res = response) => {
     return res.status(200).json({
       ok: true,
       rol,
+      msg: "Creado correctamente",
     });
   } catch (error) {
     return res.status(500).json({
