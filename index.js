@@ -29,7 +29,6 @@ app.use("/api/categoria", require("./routes/categoria"));
 app.use("/api/ciudad", require("./routes/ciudad"));
 app.use("/api/empresa", require("./routes/empresa"));
 app.use("/api/rol", require("./routes/rol"));
-app.use("/api/detalle_producto", require("./routes/detalle_producto"));
 
 //Escuchar peticiones
 app.listen(process.env.PORT, () => {

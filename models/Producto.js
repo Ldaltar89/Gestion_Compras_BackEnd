@@ -8,30 +8,45 @@ const ProductoSchema = Schema({
   proveedor: {
     type: Schema.Types.ObjectId,
     ref: "Proveedor",
+    required: true,
   },
   precio: {
     type: Number,
     required: true,
   },
-  descripcion: {
+  peso: {
+    type: Number,
+    required: true,
+  },
+  envase: {
     type: String,
     required: true,
   },
+  unidad: {
+    type: String,
+    required: true,
+  },
+  descripcion: {
+    type: String,
+    required: false,
+  },
   fecha_elaboracion: {
-    type: Date,
+    type: String,
     required: true,
   },
   fecha_caducacion: {
-    type: Date,
+    type: String,
     required: true,
   },
   marca: {
     type: Schema.Types.ObjectId,
     ref: "Marca",
+    required: true,
   },
   categoria: {
     type: Schema.Types.ObjectId,
     ref: "Categoria",
+    required: true,
   },
   lote: {
     type: String,
@@ -39,16 +54,6 @@ const ProductoSchema = Schema({
   },
   stock: {
     type: Number,
-    required: true,
-  },
-  detalle_producto: {
-    type: Schema.Types.ObjectId,
-    ref: "DetalleProducto",
-    required: false,
-  },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "Usuario",
     required: true,
   },
 });
