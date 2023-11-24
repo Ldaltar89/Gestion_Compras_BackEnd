@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const generarJWY = (uid, name) => {
+const generarJWY = (uid, name, rol) => {
   return new Promise((resolve, reject) => {
-    const payload = { uid, name };
+    const payload = { uid, name, rol };
     jwt.sign(
       payload,
       process.env.SCRETE_JWT_SEED,

@@ -21,6 +21,7 @@ router.use(validarJWT);
 
 //Obtener Proveedor
 router.get("/", validarROLE, getProveedor);
+router.get("/list", getProveedor);
 
 //Obtener id Proveedor
 router.get("/:id", validarROLE, getIdProveedor);
