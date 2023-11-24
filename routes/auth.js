@@ -17,9 +17,11 @@ const { validarCampos } = require("../middlewares/validar-campos");
 const { validarJWT, validarROLE } = require("../middlewares/validar-jwt");
 
 router.get("/users", validarJWT, getUsuarios);
+router.get("/renew", validarJWT, revalidarToken);
 
 router.post(
   "/new",
+  validarROLE,
   [
     //middlewares
     check("name", "El nombre es obligatorio").not().isEmpty(),
@@ -45,7 +47,6 @@ router.post(
   ],
   loginUsuario
 );
-router.get("/renew", validarJWT, validarROLE, revalidarToken);
 
 router.delete("/user/:id", validarROLE, validarJWT, deleteUsuario);
 
