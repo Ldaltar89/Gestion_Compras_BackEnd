@@ -39,7 +39,7 @@ const validarROLE = async (req, res = response, next) => {
         msg: "Usuario no existe",
       });
     }
-    if (usuario.rol.nombre !== "ADMIN") {
+    if (usuario.rol.nombre !== "Administrador") {
       return res.status(403).json({
         ok: false,
         msg: "No tiene privilegios",

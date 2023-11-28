@@ -59,7 +59,9 @@ router.put(
     check("producto", "El Producto es obligatorio").not().isEmpty(),
     check("proveedor", "El proveedor es obligatorio").not().isEmpty(),
     check("precio", "El precio es obligatorio").not().isEmpty(),
-    check("descripcion", "La descripción es obligatoria").not().isEmpty(),
+    check("peso", "El peso es obligatorio").not().isEmpty(),
+    check("envase", "El envase es obligatorio").not().isEmpty(),
+    check("unidad", "La unidad es obligatorio").not().isEmpty(),
     check("fecha_elaboracion", "La fecha de elaboracion es obligatoria").custom(
       isDate
     ),

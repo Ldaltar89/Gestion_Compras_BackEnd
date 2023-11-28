@@ -3,7 +3,7 @@ const Proveedor = require("../models/Proveedor");
 
 const getProveedor = async (req, res = response) => {
   try {
-    const proveedor = await Proveedor.find()
+    const proveedor = await Proveedor.find({})
       .populate("ciudad")
       .populate("empresa");
     return res.status(200).json({

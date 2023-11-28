@@ -21,7 +21,6 @@ router.get("/renew", validarJWT, revalidarToken);
 
 router.post(
   "/new",
-  validarROLE,
   [
     //middlewares
     check("name", "El nombre es obligatorio").not().isEmpty(),
@@ -48,6 +47,6 @@ router.post(
   loginUsuario
 );
 
-router.delete("/user/:id", validarROLE, validarJWT, deleteUsuario);
+router.delete("/user/:id", validarJWT, deleteUsuario);
 
 module.exports = router;
