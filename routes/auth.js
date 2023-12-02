@@ -12,12 +12,16 @@ const {
   revalidarToken,
   getUsuarios,
   deleteUsuario,
+  getIdUsuario,
+  actualizarUsuario,
 } = require("../controllers/auth");
 const { validarCampos } = require("../middlewares/validar-campos");
-const { validarJWT, validarROLE } = require("../middlewares/validar-jwt");
+const { validarJWT } = require("../middlewares/validar-jwt");
 
 router.get("/users", validarJWT, getUsuarios);
 router.get("/renew", validarJWT, revalidarToken);
+
+router.get("/user/:id", validarJWT, getIdUsuario);
 
 router.post(
   "/new",
@@ -45,6 +49,19 @@ router.post(
     validarCampos,
   ],
   loginUsuario
+);
+
+router.put(
+  "/user/:id",
+  [
+    //middlewares
+    check("name", "El nombre es obligatorio").not().isEmpty(),
+    check("email", "El email es obligatorio").isEmail(),
+    check("rol", "El rol es obligatorio").not().isEmpty(),
+    validarCampos,
+    validarJWT,
+  ],
+  actualizarUsuario
 );
 
 router.delete("/user/:id", validarJWT, deleteUsuario);

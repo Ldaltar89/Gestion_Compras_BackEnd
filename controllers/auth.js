@@ -1,4 +1,4 @@
-const { response } = require("express");
+const { response, json } = require("express");
 const Usuario = require("../models/Usuario");
 const bcrypt = require("bcryptjs");
 const { generarJWY } = require("../helpers/jwt");
@@ -44,6 +44,83 @@ const crearUsuario = async (req, res = response) => {
       ok: false,
       msg: "Por favor hable con el administrador.",
     });
+  }
+};
+
+const getIdUsuario = async (req, res = response) => {
+  const id = req.params.id;
+  try {
+    const usuario = await await Usuario.findById(id);
+    if (!usuario) {
+      return res.status(401).json({
+        ok: false,
+        msg: "Error id del Usuario",
+      });
+    }
+    return res.status(200).json({
+      ok: true,
+      usuario,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: "hable con el administrador",
+    });
+  }
+};
+
+const actualizarUsuario = async (req, res = response) => {
+  const id = req.params.id;
+  try {
+    const usuario = await Usuario.findById(id);
+    if (!usuario) {
+      return res.status(401).json({
+        ok: false,
+        msg: "Error id del Usuario",
+      });
+    }
+    const { name, email, password, ...fields } = req.body;
+    if (usuario.name !== name) {
+      const existName = await Usuario.findOne({ name });
+      if (existName) {
+        return res.status(404).json({
+          ok: false,
+          msg: "Ya existe ese nombre en el sistema",
+        });
+      }
+    }
+    if (usuario.email !== email) {
+      const existEmail = await Usuario.findOne({ email });
+      if (existEmail) {
+        return res.status(404).json({
+          ok: false,
+          msg: "ya existe ese email en el sistema",
+        });
+      }
+    }
+    if (password !== "") {
+      const salt = bcrypt.genSaltSync();
+      fields.name = name;
+      fields.email = email;
+      fields.password = bcrypt.hashSync(password, salt);
+      await Usuario.findByIdAndUpdate(id, fields, {
+        new: true,
+      });
+    } else {
+      delete fields.password;
+      fields.name = name;
+      fields.email = email;
+      await Usuario.findByIdAndUpdate(id, fields, {
+        new: true,
+      });
+    }
+
+    return res.status(200).json({
+      ok: true,
+      msg: "Actualizado correctamente",
+    });
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -137,4 +214,6 @@ module.exports = {
   revalidarToken,
   getUsuarios,
   deleteUsuario,
+  getIdUsuario,
+  actualizarUsuario,
 };
